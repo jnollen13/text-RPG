@@ -1,6 +1,33 @@
 namespace SpriteKind {
     export const allie = SpriteKind.create()
 }
+function quest9 () {
+    adventure.addToTextlog("You got tackled and pinned down by pirates.")
+    pause(100)
+    adventure.addToTextlog("They decided to make you the cabin boy.")
+    pause(100)
+    adventure.addToTextlog("Cabin boy jobs include:    moping the decks,  following orders,  untangling the ropes, & cleaning the ship.")
+    pause(1500)
+    adventure.addToTextlog("press (A) to get to work.   Press (B) to try and annoy them into letting you go.             press (arrow key) to jump over the side of the boat.")
+    pause(100)
+    pauseUntil(() => controller.anyButton.isPressed())
+    if (controller.A.isPressed()) {
+        adventure.addToTextlog("you get to work immediately.")
+        questsplit1b()
+    } else if (controller.B.isPressed()) {
+        adventure.addToTextlog("you start singing the wellerman:")
+        adventure.addToTextlog("there once was a ship that put to sea, the name of the ship was the billy o' tea. The winds blew hard and bowed her down and blow my billy boys, blow. Soon may the wellerman come to bring us sugar and tea and rum one day when the tugging is done will take our leave and go. She'd  not been to weeks from shore when down on her a right whale bore. The captin called all hands and swore he'd take that whale in tow.  Soon may the wellerman come to bring us sugar and tea and rum one day when the tugging is done we'll take our leave and go. Da-da-da-da-da Da-da-da-da-da-da-da Da-da-da-da-da-da-da-da-da-da-da. Before the boat had hit the water The whale's tail came up and caught her All hands to the side, harpooned and fought her When she dived down low. soon may the wellerman come to bring us sugar and tea and rum one day when the tugging is done we'll take our leave and go. No line was cut, no whale was freed The captain's mind was not of greed And he belonged to the Whaleman's creed She took that ship in tow. Soon may the Wellerman come To bring us sugar and tea and rum One day, when the tugging is done We'll take our leave and go. Da-da-da-da-da Da-da-da-da-da-da-da Da-da-da-da-da-da-da-da-da-da-da. For forty days or even more The line went slack then tight once more All boats were lost, there were only four But still that whale did go. Soon may the Wellerman come To bring us sugar and tea and rum One day, when the tugging is done We'll take our leave and go. As far as I've heard, the fight's still on The line's not cut, and the whale's not gone The Wellerman makes his regular call To encourage the captain, crew and all. Soon may the Wellerman come To bring us sugar and tea and rum One day, when the tugging is done We'll take our leave and go. Soon may the Wellerman come To bring us sugar and tea and rum One day, when the tugging is done We'll take our leave and goo.")
+        pause(1000)
+        adventure.addToTextlog("The pirates told you that they changed their minds and decided that you would sing sea shantys for them")
+        pause(100)
+        questsplit1()
+    } else {
+        adventure.addToTextlog("you jumped over the side of the ship.")
+        adventure.addToTextlog("It was wet.")
+        adventure.addToTextlog("the pirates pulled you aboard and forced you to work at sword point.")
+        questsplit1b()
+    }
+}
 function quest3 () {
     music.play(music.createSong(assets.song`quest_from_the_king`), music.PlaybackMode.InBackground)
     scene.setBackgroundColor(15)
@@ -250,6 +277,9 @@ function quest1 () {
         quest1()
     }
 }
+function questsplit1 () {
+    adventure.addToTextlog("press")
+}
 function quest21 () {
     adventure.addToTextlog("Press (A) keep fighting")
     adventure.addToTextlog("Press (B) to run away")
@@ -397,7 +427,7 @@ function quest6 () {
     pauseUntil(() => controller.B.isPressed() || controller.A.isPressed())
     if (controller.A.isPressed()) {
         adventure.addToTextlog("you got on the ship.")
-        adventure.addToTextlog("You got tackled and pinned down and your pockets were emptied")
+        quest9()
     } else if (controller.B.isPressed()) {
         adventure.addToTextlog("you sit down & wait forever.")
         game.setGameOverMessage(false, "you Died of boredom...")
@@ -473,9 +503,16 @@ function quest7 () {
         adventure.addToTextlog("the knight leaves you and kills the goblin.")
     } else {
         adventure.addToTextlog("you ran away...")
-        adventure.addToTextlog("you fell off a cliff onto a pirates boat")
+        adventure.addToTextlog("you fell off a cliff onto a pirates boat.")
         adventure.addImageToTextLog(assets.image`ship1`)
+        quest9()
     }
+}
+function questsplit1b () {
+    adventure.addToTextlog("your arms hurt from scrubbing the decks.")
+}
+function questsplit2 () {
+    adventure.addToTextlog("you keep going forward.")
 }
 info.onLifeZero(function () {
     game.over(false, effects.splatter)
