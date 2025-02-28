@@ -405,6 +405,55 @@ function quest6 () {
         game.gameOver(false)
     }
 }
+function lorestart () {
+    adventure.addImageToTextLog(assets.image`dice`)
+    adventure.addToTextlog("press (A) to read lore. press (B) to start the game.")
+    pauseUntil(() => controller.B.isPressed() || controller.A.isPressed())
+    if (controller.A.isPressed()) {
+        adventure.addImageToTextLog(assets.image`scroll of lore`)
+        pause(100)
+        adventure.addToTextlog("This game is set in medieval times. the character you play as is a warrior without a sword.")
+        pause(852)
+        adventure.addToTextlog("In this land there are seven kingdoms consistently battling each other for power. These kingdoms are:")
+        pause(3900)
+        adventure.addToTextlog("The seafaring kingdom, ruled by the pirates and Queen Gráinne Mhaol.")
+        pause(750)
+        adventure.addToTextlog("The orc kingdom, ruled by the orcs and king Ocrasged.")
+        pause(750)
+        adventure.addToTextlog("The troll kingdom, ruled by the trolls and king Grollis.")
+        pause(750)
+        adventure.addToTextlog("The dark kingdom, ruled by the dwarfs and king hertrik.")
+        pause(750)
+        adventure.addToTextlog("The forest kingdom, ruled by mushroom folk and Queen Iðunn.")
+        pause(750)
+        adventure.addToTextlog("The war kingdom, ruled by knights and king Jerun.")
+        pause(750)
+        adventure.addToTextlog("&")
+        adventure.addToTextlog("The sky kingdom, ruled by birds and queen laxe.")
+        pause(1300)
+        adventure.addToTextlog("The war kingdom fights everybody except the sky kingdom and the dark kingdom.")
+        pause(1600)
+        adventure.addToTextlog("The sky kingdom mainly stays in the sky and mountains but sometimes invades the land around the mountains.")
+        pause(2000)
+        adventure.addToTextlog("The orc kingdom and the Troll kingdom attack anybody they come across.")
+        pause(1000)
+        adventure.addToTextlog("The dark kingdom took the safer strategy and gives the kingdoms weapons in turn for land, except for the orc kingdom and troll kingdom, because they have a grudge against them. The dark kingdom mercilessly attacks the orc kingdom and troll kingdom.")
+        pause(10000)
+        adventure.addToTextlog("The seafaring kingdom attacks everybody near the coast.")
+        pause(1000)
+        adventure.addToTextlog("the forest kingdom attacks orcs, trolls, & goblins that come into their forests.")
+        pause(1000)
+        adventure.addToTextlog("your character lives near the sky and forest kingdoms on the dark kingdoms land and on the seafaring kingdoms land")
+        pause(1000)
+        adventure.addToTextlog("starting game...")
+        quest1()
+    } else if (controller.B.isPressed()) {
+        adventure.addImageToTextLog(assets.image`remove text`)
+        adventure.setScoreOverride(adventure.Currency.Coins, 1)
+        info.setLife(3)
+        quest1()
+    }
+}
 function quest7 () {
     adventure.addToTextlog("you met back up with wandering knight.")
     pause(100)
@@ -415,42 +464,23 @@ function quest7 () {
     pauseUntil(() => controller.anyButton.isPressed())
     if (controller.A.isPressed()) {
         adventure.addToTextlog("you decided to fight")
-        pause(2000)
-        adventure.clearTextLog()
         pause(100)
-        tiles.setCurrentTilemap(tilemap`level2`)
-        mySprite = sprites.create(assets.image`sprite`, SpriteKind.Player)
+        info.changeLifeBy(-1)
         pause(100)
-        mySprite2 = sprites.create(assets.image`sprite`, SpriteKind.allie)
-        scene.cameraFollowSprite(mySprite)
-        pause(1000)
-        mySprite3 = sprites.create(assets.image`g`, SpriteKind.Enemy)
-        tiles.placeOnRandomTile(mySprite3, assets.tile`myTile0`)
-        pause(100)
-        mySprite2.follow(mySprite3, 333)
-        pause(500)
-        sprites.destroy(mySprite3, effects.spray, 200)
-        pause(200)
-        tiles.setCurrentTilemap(tilemap`level4`)
-        sprites.destroy(mySprite)
-        sprites.destroy(mySprite2)
+        adventure.addToTextlog("you killed the goblin.")
     } else if (controller.B.isPressed()) {
         adventure.addToTextlog("you hid behind the knight.")
         adventure.addToTextlog("the knight leaves you and kills the goblin.")
     } else {
-    	
+        adventure.addToTextlog("you ran away...")
+        adventure.addToTextlog("you fell off a cliff onto a pirates boat")
+        adventure.addImageToTextLog(assets.image`ship1`)
     }
 }
 info.onLifeZero(function () {
     game.over(false, effects.splatter)
 })
-let mySprite3: Sprite = null
-let mySprite2: Sprite = null
-let mySprite: Sprite = null
 let varrible1 = 0
 adventure.clearTextLog()
 varrible1 = 0
-story.showPlayerChoices("read lore", "play game")
-adventure.setScoreOverride(adventure.Currency.Coins, 1)
-info.setLife(3)
-quest1()
+lorestart()
