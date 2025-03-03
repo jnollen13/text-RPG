@@ -16,10 +16,10 @@ function quest9 () {
         questsplit1b()
     } else if (controller.B.isPressed()) {
         adventure.addToTextlog("you start singing the wellerman:")
-        adventure.addToTextlog("there once was a ship that put to sea, the name of the ship was the billy o' tea. The winds blew hard and bowed her down and blow my billy boys, blow. Soon may the wellerman come to bring us sugar and tea and rum one day when the tugging is done will take our leave and go. She'd  not been to weeks from shore when down on her a right whale bore. The captin called all hands and swore he'd take that whale in tow.  Soon may the wellerman come to bring us sugar and tea and rum one day when the tugging is done we'll take our leave and go. Da-da-da-da-da Da-da-da-da-da-da-da Da-da-da-da-da-da-da-da-da-da-da. Before the boat had hit the water The whale's tail came up and caught her All hands to the side, harpooned and fought her When she dived down low. soon may the wellerman come to bring us sugar and tea and rum one day when the tugging is done we'll take our leave and go. No line was cut, no whale was freed The captain's mind was not of greed And he belonged to the Whaleman's creed She took that ship in tow. Soon may the Wellerman come To bring us sugar and tea and rum One day, when the tugging is done We'll take our leave and go. Da-da-da-da-da Da-da-da-da-da-da-da Da-da-da-da-da-da-da-da-da-da-da. For forty days or even more The line went slack then tight once more All boats were lost, there were only four But still that whale did go. Soon may the Wellerman come To bring us sugar and tea and rum One day, when the tugging is done We'll take our leave and go. As far as I've heard, the fight's still on The line's not cut, and the whale's not gone The Wellerman makes his regular call To encourage the captain, crew and all. Soon may the Wellerman come To bring us sugar and tea and rum One day, when the tugging is done We'll take our leave and go. Soon may the Wellerman come To bring us sugar and tea and rum One day, when the tugging is done We'll take our leave and goo.")
+        adventure.addToTextlog("there once was a ship that put to sea, the name of the ship was the billy o' tea. The winds blew hard and bowed her down and blow my billy boys, blow. Soon may the wellerman come to bring us sugar and tea and rum one day when the tugging is done will take our leave and go. She'd  not been to weeks from shore when down on her a right whale bore. The captin called all hands and swore he'd take that whale in tow.  Soon may the wellerman come to bring us sugar and tea and rum one day when the tugging is done we'll take our leave and go. Da-da-da-da-da Da-da-da-da-da-da-da Da-da-da-da-da-da-da-da-da-da-da. Before the boat had hit the water The whale's tail came up and caught her All hands to the side, harpooned and fought her When she dived down low. soon may the wellerman come to bring us sugar and tea and rum one day when the tugging is done we'll take our leave and go. No line was cut, no whale was freed The captain's mind was not of greed And he belonged to the Whaleman's creed She took that ship in tow. Soon may the Wellerman come To bring us sugar and tea and rum One day, when the tugging is done We'll take our leave and go. Da-da-da-da-da Da-da-da-da-da-da-da Da-da-da-da-da-da-da-da-da-da-da. For forty days or even more The line went slack then tight once more All boats were lost, there were only four But still that whale did go. Soon may the Wellerman come To bring us sugar and tea and rum One day, when the tugging is done We'll take our leave and go. As far as I've heard, the fight's still on The line's not cut, and the whale's not gone The Wellerman makes his regular call To encourage the captain, crew and all. Soon may the Wellerman come To bring us sugar and tea and rum One day, when the tugging is done We'll take our leave and go. Soon may the Wellerman come To bring us sugar and tea and rum One day, when the tugging is done We'll take our leave and go.")
+        pause(200)
+        adventure.addToTextlog("The pirates told you that they changed their minds and decided that you would sing sea shantys for them.")
         pause(1000)
-        adventure.addToTextlog("The pirates told you that they changed their minds and decided that you would sing sea shantys for them")
-        pause(100)
         questsplit1()
     } else {
         adventure.addToTextlog("you jumped over the side of the ship.")
@@ -199,6 +199,9 @@ function quest4 () {
         quest6()
     }
 }
+info.onLifeZero(function () {
+    game.over(false, effects.splatter)
+})
 function quest1 () {
     scene.setBackgroundImage(assets.image`bg0`)
     music.play(music.createSong(assets.song`going_on_an_adventure`), music.PlaybackMode.InBackground)
@@ -278,7 +281,7 @@ function quest1 () {
     }
 }
 function questsplit1 () {
-    adventure.addToTextlog("press")
+    adventure.addToTextlog("press (A) to jump off the boat and swim away as fast as you can.        press (B) to run around screaming .")
 }
 function quest21 () {
     adventure.addToTextlog("Press (A) keep fighting")
@@ -293,6 +296,9 @@ function quest21 () {
         adventure.addToTextlog("you found the traveling knight.")
         quest3()
     }
+}
+function questsplit1b () {
+    adventure.addToTextlog("your arms hurt from scrubbing the decks.")
 }
 function quest2 () {
     music.play(music.createSong(assets.song`a_fairy_and_an_ogre`), music.PlaybackMode.InBackground)
@@ -474,13 +480,17 @@ function lorestart () {
         adventure.addToTextlog("the forest kingdom attacks orcs, trolls, & goblins that come into their forests.")
         pause(1000)
         adventure.addToTextlog("your character lives near the sky and forest kingdoms on the dark kingdoms land and on the seafaring kingdoms land")
-        pause(1000)
+        pause(1300)
         adventure.addToTextlog("starting game...")
+        pause(100)
+        adventure.addImageToTextLog(assets.image`remove text`)
+        info.setLife(3)
+        adventure.setScoreOverride(adventure.Currency.Coins, 1)
         quest1()
     } else if (controller.B.isPressed()) {
         adventure.addImageToTextLog(assets.image`remove text`)
-        adventure.setScoreOverride(adventure.Currency.Coins, 1)
         info.setLife(3)
+        adventure.setScoreOverride(adventure.Currency.Coins, 0)
         quest1()
     }
 }
@@ -508,15 +518,9 @@ function quest7 () {
         quest9()
     }
 }
-function questsplit1b () {
-    adventure.addToTextlog("your arms hurt from scrubbing the decks.")
-}
 function questsplit2 () {
     adventure.addToTextlog("you keep going forward.")
 }
-info.onLifeZero(function () {
-    game.over(false, effects.splatter)
-})
 let varrible1 = 0
 adventure.clearTextLog()
 varrible1 = 0

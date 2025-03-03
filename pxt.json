@@ -17,13 +17,14 @@
         "tutorial.custom.ts",
         "pxt.json",
         "tilemap.g.jres",
-        "tilemap.g.ts"
+        "tilemap.g.ts",
+        "main.py"
     ],
     "testFiles": [
         "test.ts"
     ],
     "targetVersions": {
-        "target": "1.12.59",
+        "target": "1.12.61",
         "targetId": "arcade"
     },
     "supportedTargets": [
