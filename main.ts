@@ -199,9 +199,6 @@ function quest4 () {
         quest6()
     }
 }
-info.onLifeZero(function () {
-    game.over(false, effects.splatter)
-})
 function quest1 () {
     scene.setBackgroundImage(assets.image`bg0`)
     music.play(music.createSong(assets.song`going_on_an_adventure`), music.PlaybackMode.InBackground)
@@ -268,7 +265,7 @@ function quest1 () {
         adventure.addToTextlog("You start to leave with the knight.")
         adventure.changeScoreOverride(adventure.Currency.Coins, 2)
         adventure.addImageToTextLog(assets.image`cion`)
-        adventure.addToTextlog("You got paid.")
+        adventure.addToTextlog("You got paid by the knight.")
         adventure.changeLogColors(1, 9)
         quest2()
     } else {
@@ -282,8 +279,14 @@ function quest1 () {
 }
 function questsplit1 () {
     adventure.addToTextlog("press (A) to jump off the boat and swim away as fast as you can.        press (B) to run around screaming .")
+    pauseUntil(() => controller.A.isPressed() || controller.B.isPressed())
+    if (controller.A.isPressed()) {
+        adventure.addToTextlog("when you climbed onto land you saw your house nearby.")
+    } else if (controller.B.isPressed()) {
+        adventure.addToTextlog("The pirates got very upset with you and fired you out of a cannon onto shore.")
+    }
 }
-function quest21 () {
+function quest2contined1 () {
     adventure.addToTextlog("Press (A) keep fighting")
     adventure.addToTextlog("Press (B) to run away")
     pauseUntil(() => controller.B.isPressed() || controller.A.isPressed())
@@ -291,7 +294,7 @@ function quest21 () {
         adventure.addToTextlog("you keep fighting...")
         adventure.addImageToTextLog(assets.image`land octopuss`)
         adventure.addToTextlog("you were killed by a land octopus.")
-        info.changeLifeBy(-2)
+        info.changeLifeBy(-3)
     } else {
         adventure.addToTextlog("you found the traveling knight.")
         quest3()
@@ -299,6 +302,22 @@ function quest21 () {
 }
 function questsplit1b () {
     adventure.addToTextlog("your arms hurt from scrubbing the decks.")
+    adventure.addToTextlog("The pirates got bored of you and dropped you off on land.")
+    adventure.addToTextlog("press (A) to give up on this adventure and head home.                             Press (B) to start exploring               Press (down) to dig a hole and join the dwarves.")
+    pauseUntil(() => controller.A.isPressed() || (controller.B.isPressed() || controller.down.isPressed()))
+    if (controller.A.isPressed()) {
+        adventure.addToTextlog("you head home and take a nap.")
+        quest1()
+    } else if (controller.B.isPressed()) {
+        adventure.addToTextlog("You set off in a random direction.")
+        quest7()
+    } else {
+        adventure.addToTextlog("You start digging a hole in the ground but it is taking a while because your arms are tired.")
+        pause(1000)
+        adventure.addToTextlog("The ground beneath you suddenly gave away and you fell on top of a dwarf that was carving out a building. But... it was also a long fall and you got hurt.")
+        info.changeLifeBy(-1)
+        dwarven_realm1()
+    }
 }
 function quest2 () {
     music.play(music.createSong(assets.song`a_fairy_and_an_ogre`), music.PlaybackMode.InBackground)
@@ -390,7 +409,7 @@ function quest2 () {
         adventure.addImageToTextLog(assets.image`goblin`)
         adventure.addToTextlog("You were badly injured...")
         info.changeLifeBy(-2)
-        quest21()
+        quest2contined1()
     } else {
         adventure.addToTextlog("you actually leave this time..")
         adventure.addToTextlog("you start traveling...")
@@ -440,6 +459,11 @@ function quest6 () {
         game.setGameOverEffect(false, effects.melt)
         game.gameOver(false)
     }
+}
+function dwarven_realm1 () {
+    adventure.addToTextlog("The dwarf yells at you to watch where you dig. ")
+    adventure.addToTextlog("Then they ask you if you want to join the dark kingdom")
+    adventure.addToTextlog("press (A) to say yes               press (B) to say no")
 }
 function lorestart () {
     adventure.addImageToTextLog(assets.image`dice`)
@@ -520,8 +544,28 @@ function quest7 () {
 }
 function questsplit2 () {
     adventure.addToTextlog("you keep going forward.")
+    adventure.addToTextlog("you see the battlefield over the hill in front of you.")
 }
+controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
+    menuopen = 1
+    story.showPlayerChoices("continue", "restart")
+    if (story.checkLastAnswer("continue")) {
+        adventure.addToTextlog("continuing...")
+        menuopen = 0
+    } else if (story.checkLastAnswer("restart")) {
+        for (let index = 0; index < 1; index++) {
+            adventure.addToTextlog("restarting...")
+            adventure.addImageToTextLog(assets.image`loading___`)
+        }
+        game.reset()
+    }
+})
+info.onLifeZero(function () {
+    game.over(false, effects.splatter)
+})
 let varrible1 = 0
+let menuopen = 0
+menuopen = 0
 adventure.clearTextLog()
 varrible1 = 0
 lorestart()
