@@ -1,7 +1,7 @@
  
 
 
-> Open this page at [https://jnollen13.github.io/text-rpg/](https://jnollen13.github.io/text-rpg/)
+> Open this page at https://arcade.makecode.com/S04520-67851-65206-97725
 
 ## Use as Extension
 
